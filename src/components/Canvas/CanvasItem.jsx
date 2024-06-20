@@ -9,7 +9,6 @@ import IconButton from '../Icon/IconButton';
 import './CanvasItem.css';
 
 const proptypes = {
-    label: PropTypes.string.isRequired,
     x: PropTypes.number,
     y: PropTypes.number,
     width: PropTypes.number,

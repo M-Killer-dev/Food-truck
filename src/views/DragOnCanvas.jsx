@@ -1,11 +1,12 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Canvas from '../components/Canvas/Canvas';
 import CanvasItem from '../components/Canvas/CanvasItem';
 import CardItem from "../components/CardItem"
+import { menuData } from "../data/data"
 
 
 const proptypes = {
@@ -17,36 +18,34 @@ const defaultProps = {
   hideFancyLiveRegion: false
 };
 
-export class DragOnCanvasExample extends Component {
-  render() {
-    return (
-      <div>
-        <Canvas hideFancyLiveRegion={this.props.hideFancyLiveRegion}>
-          <CanvasItem label="Object A" x={2} y={1} minWidth={3} minHeight={3}>
-            <CardItem />
-          </CanvasItem>
-          <CanvasItem label="Object B" x={6} y={12} width={4} height={4} minWidth={3} minHeight={3} />
-          <CanvasItem label="Object C" x={6} y={12} width={4} height={4} minWidth={3} minHeight={3} />
-          <CanvasItem label="Object D" x={6} y={12} width={4} height={4} minWidth={3} minHeight={3} />
-          <CanvasItem label="Object E" x={6} y={12} width={4} height={4} minWidth={3} minHeight={3} />
-        </Canvas>
-      </div>
-    );
-  }
+export const DragOnCanvasExample = (props) => {
+
+  return (
+    <div>
+      <Canvas hideFancyLiveRegion={props.hideFancyLiveRegion}>
+        {
+          menuData ? menuData.map((item, index) =>
+          (
+            <CanvasItem key={item.id} x={2 * (index + 1)} y={1 * (index + 1)} minWidth={3} minHeight={3}>
+              <CardItem cardData={item} />
+            </CanvasItem>
+          )
+          ) : null
+        }
+      </Canvas>
+    </div>
+  );
 }
 
 DragOnCanvasExample.propTypes = proptypes;
 DragOnCanvasExample.defaultProps = defaultProps;
 
-export class DragOnCanvasView extends Component {
-
-  render() {
-    return (
-      <article>
-        <DragOnCanvasExample/>
-      </article>
-    ); 
-  }
+export const DragOnCanvasView = () => {
+  return (
+    <article>
+      <DragOnCanvasExample />
+    </article>
+  );
 }
 
 // module.exports = {DragOnCanvasExample, DragOnCanvasView}
