@@ -16,41 +16,39 @@ export default function index({ cardData }) {
   }
 
   return (
-    <div>
-      <div className='container p-2'>
-        <div className='d-flex flex-column'>
-          <div className='header-title d-flex justify-content-center'>
-            <span className='title1'>
-              {cardData && splitStr(cardData.title)[0]}</span>
-            <span className='title2'>
-              {cardData && splitStr(cardData.title)[1]}</span>
-          </div>
-          <div className='subtitle-container'>
-            {
-              cardData.subtitle ?
-                (
-                  <div className='subtitle d-flex justify-content-center'>
-                    {`(${cardData.subtitle})`}
-                  </div>
-                ) : null
-            }
-          </div>
-          <div className='category-item-list d-flex justify-content-center'>
-            {
-              cardData && cardData.submenu ?
-                cardData.submenu.map((item, index) =>
-                (
-                  <div key={item.id} className='category-item'>
-                    <p>
-                      {item.name}
-                    </p>
-                    <span>{`$${item.price1}`}</span>
-                    <span>{item.price2 ? `/$${item.price2}` : ""}</span>
-                  </div>
-                )
-                ) : null
-            }
-          </div>
+    <div className='container p-2'>
+      <div className='d-flex flex-column'>
+        <div className='header-title d-flex justify-content-center'>
+          <span className='title1'>
+            {cardData && splitStr(cardData.title)[0]}</span>
+          <span className='title2'>
+            {cardData && splitStr(cardData.title)[1]}</span>
+        </div>
+        <div className='subtitle-container'>
+          {
+            cardData.subtitle ?
+              (
+                <div className='subtitle d-flex justify-content-center'>
+                  {`(${cardData.subtitle})`}
+                </div>
+              ) : null
+          }
+        </div>
+        <div className='category-item-list d-flex justify-content-center'>
+          {
+            cardData && cardData.submenu ?
+              cardData.submenu.map((item, index) =>
+              (
+                <div key={item.id} className='category-item'>
+                  <p>
+                    {item.name}
+                  </p>
+                  <span>{`$${item.price1}`}</span>
+                  <span>{item.price2 ? `/$${item.price2}` : ""}</span>
+                </div>
+              )
+              ) : null
+          }
         </div>
       </div>
     </div>

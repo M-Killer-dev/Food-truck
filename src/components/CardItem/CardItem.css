@@ -1,11 +1,3 @@
-.logo {
-    width: 100%;
-}
-
-.logo img {
-    width: 100%;
-}
-
 .header-title .title1 {
     color: #de6744;
     padding-right: 10px;
@@ -15,6 +7,7 @@
 
 .subtitle-container {
     display: flex;
+    justify-content: center;
 }
 
 .subtitle {

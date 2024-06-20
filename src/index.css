@@ -26,3 +26,11 @@ html {
 .demo-page__select-container {
   width: 12rem;
 }
+
+.logo {
+  width: 100%;
+}
+
+.logo img {
+  width: 100%;
+}

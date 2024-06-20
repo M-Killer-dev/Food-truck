@@ -23,7 +23,7 @@ export const menuData = [
                 price2: 17
             },
             {
-                id: 1,
+                id: 4,
                 name: "WHOLE CHICKEN",
                 price1: 18,
                 price2: 27

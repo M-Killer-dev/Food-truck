@@ -2,8 +2,15 @@
    Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
 
 .dnd-canvas__object {
-    border-radius: 0.25rem;
-    border: 1px solid #d8dde6;
+  /* border-radius: 0.25rem;
+  border: 1px solid #d8dde6; */
+  border: 0px solid white;
+  transition: border-width 0s, border-color 0.5s;
+}
+
+.dnd-canvas__object:hover {
+  border-radius: 0.25rem;
+  border: 1px solid #d8dde6;
 }
 
 .dnd-canvas__object.dnd-canvas__object--moving {

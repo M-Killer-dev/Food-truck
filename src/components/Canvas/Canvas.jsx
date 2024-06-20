@@ -21,8 +21,8 @@ const proptypes = {
 };
 
 const defaultProps = {
-  gridInterval: 20,
-  gridSize: 20,
+  gridInterval: 10,
+  gridSize: 10,
   minWidth: 1,
   minHeight: 1,
   hideFancyLiveRegion: false
