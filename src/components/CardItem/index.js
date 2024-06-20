@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./CardItem.css";
 import ImageUpload from "../Common/ImageUpload.jsx";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import UnderStars from "./UnderStars.js";
 
 export default function index({ cardData }) {
   const [image, setImage] = useState();
@@ -45,7 +46,10 @@ export default function index({ cardData }) {
             ? cardData.submenu.map((item, index) => (
                 <div key={item.id} className="category-item">
                   <div className="category-container">
-                    <p>{item.name}</p>
+                    <div className="text-with-dots">
+                      <p>{item.name}</p>
+                      <UnderStars />
+                    </div>
                     <div>
                       <span>{`$${item.price1}`}</span>
                       <span>{item.price2 ? `/$${item.price2}` : ""}</span>

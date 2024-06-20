@@ -43,7 +43,21 @@
 
 .category-item p {
   padding-right: 10px;
+  text-align: left;
 }
 
 .category-item span {
+}
+
+.text-with-dots {
+  width: 100%;
+}
+
+.under-stars {
+  width: 80%;
+  border-bottom: 3px dotted #333;
+  /* background-color: #f0f0f0; */
+  background-color: white;
+  color: #333;
+  font-size: 0.5rem;
 }

@@ -80,13 +80,12 @@ class Canvas extends Component {
     var style = {
       backgroundSize: backgroundSize,
       backgroundPosition: "10px 10px", // TODO: remove hardcoding
-      width: "1000px",
-      height: "800px",
+      height: "900px",
     };
 
     return (
       <div
-        className="slds-box dnd-canvas__container"
+        className="container slds-box dnd-canvas__container"
         aria-label={`Canvas: ${this.props.gridSize} by ${this.props.gridSize}`}
         style={style}
       >
