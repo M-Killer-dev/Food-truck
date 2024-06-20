@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Canvas from "../components/Canvas/Canvas";
 import CanvasItem from "../components/Canvas/CanvasItem";
@@ -18,6 +18,18 @@ const defaultProps = {
 };
 
 export const DragOnCanvasExample = (props) => {
+  const [cardsData, setCardsData] = useState([]);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("data"));
+    if (data && data.length) setCardsData(data);
+    else setCardsData(menuData)
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(cardsData));
+  }, [cardsData]);
+
   return (
     <div>
       <Canvas hideFancyLiveRegion={props.hideFancyLiveRegion}>
@@ -26,14 +38,19 @@ export const DragOnCanvasExample = (props) => {
             <img src="logo.png" alt="logo"></img>
           </div>
         </CanvasItem>
-        {menuData
-          ? menuData.map((item, index) => (
+        {cardsData
+          ? cardsData.map((item, index) => (
               <CanvasItem
                 key={item.id}
-                x={10 * (index + 1)}
-                y={1 * (index + 1)}
+                test={item.x}
+                x={item.x ? item.x : 10 * (index + 1)}
+                y={item.y ? item.y : 1 * (index + 1)}
+                width={item.width ? item.width : null }
+                height={item.height ? item.height : null }
                 minWidth={3}
                 minHeight={3}
+                menuId={item.id}
+                setCardsData={setCardsData}
               >
                 <CardItem cardData={item} />
               </CanvasItem>

@@ -23,7 +23,7 @@ export default function index({ cardData }) {
   };
 
   return (
-    <div className="container p-2 d-flex">
+    <div className={`container p-2 d-flex card-container card-${cardData.id}`}>
       <div className="d-flex flex-column">
         <div className="header-title d-flex justify-content-center">
           <span className="title1">

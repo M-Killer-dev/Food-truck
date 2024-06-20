@@ -1,3 +1,8 @@
+.card-container {
+  height: 100%;
+  width: 100%;
+}
+
 .header-title .title1 {
   color: #de6744;
   padding-right: 10px;

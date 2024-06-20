@@ -3,6 +3,7 @@
 
 import React, { Component } from "react";
 import classNames from "classnames";
+import _ from "lodash";
 import PropTypes from "prop-types";
 import Rnd from "react-rnd";
 import "./CanvasItem.css";
@@ -18,6 +19,7 @@ const proptypes = {
   canvasHeight: PropTypes.number,
   moveAriaDescribedby: PropTypes.string,
   resizeAriaDescribedby: PropTypes.string,
+  menuId: PropTypes.number,
 };
 
 class CanvasItem extends Component {
@@ -29,15 +31,15 @@ class CanvasItem extends Component {
     this.handleResizeStop = this.handleResizeStop.bind(this);
 
     this.defaultPosition = {
-      x: this.props.gridInterval * this.props.x,
-      y: this.props.gridInterval * this.props.y,
+      x: this.props.x,
+      y: this.props.y,
       // width: (this.props.gridInterval * this.props.width),
       // height: (this.props.gridInterval * this.props.height),
       width: this.props.width
-        ? this.props.gridInterval * this.props.width
+        ? this.props.width
         : "fix-content",
       height: this.props.height
-        ? this.props.gridInterval * this.props.height
+        ? this.props.height
         : "fix-content",
       minWidth: this.props.gridInterval * this.props.minWidth,
       minHeight: this.props.gridInterval * this.props.minHeight,
@@ -83,6 +85,8 @@ class CanvasItem extends Component {
         Column: ${y / this.props.gridInterval + 1}.
       `);
     }
+
+    console.log(this.props.menuId, x, y);
   }
 
   moveLeft() {
@@ -125,65 +129,14 @@ class CanvasItem extends Component {
   /* Update state to reflect new position */
   handleDragStop(event, data) {
     this.setState({ x: data.x, y: data.y });
-  }
-
-  /** ---- Moving element END ---- **/
-  /** ---- Resizing element START ---- **/
-
-  updateSize(width, height, isCancel) {
-    this.rnd.updateSize({ width: width, height: height });
-    this.setState({ width: width, height: height });
-    if (isCancel) {
-      this.props.updateLiveText(`Resize cancelled.`);
-    } else {
-      this.props.updateLiveText(`
-        Width: ${width / this.props.gridInterval},
-        Height: ${height / this.props.gridInterval}.
-      `);
-    }
-  }
-
-  makeShorter() {
-    if (this.state.height > this.props.minHeight) {
-      this.updateSize(
-        this.state.width,
-        this.state.height - this.props.gridInterval
-      );
-    }
-  }
-
-  makeTaller() {
-    const newHeight = this.state.height + this.props.gridInterval;
-    if (this.state.y + newHeight <= this.props.canvasSize) {
-      this.updateSize(
-        this.state.width,
-        this.state.height + this.props.gridInterval
-      );
-    }
-  }
-
-  makeWider() {
-    const newWidth = this.state.width + this.props.gridInterval;
-    if (this.state.x + newWidth <= this.props.canvasSize) {
-      this.updateSize(
-        this.state.width + this.props.gridInterval,
-        this.state.height
-      );
-    }
-  }
-
-  makeNarrower() {
-    if (this.state.width > this.props.minWidth) {
-      this.updateSize(
-        this.state.width - this.props.gridInterval,
-        this.state.height
-      );
-    }
-  }
-
-  cancelResize() {
-    this.updateSize(this.state.prevWidth, this.state.prevHeight, true);
-    this.setState({ isResizing: false });
+    let cardsData = JSON.parse(localStorage.getItem("data"));
+    let index = _.findIndex(cardsData, { id: this.props.menuId });
+    cardsData[index] = {
+      ...cardsData[index],
+      x: data.x,
+      y: data.y,
+    };
+    localStorage.setItem("data", JSON.stringify(cardsData))
   }
 
   /** Update state to reflect new size */
@@ -192,6 +145,23 @@ class CanvasItem extends Component {
       width: this.state.width + delta.width,
       height: this.state.height + delta.height,
     });
+
+    let cardWidth = document.getElementsByClassName(
+      `card-${this.props.menuId}`
+    )[0].clientWidth;
+    let cardHeight = document.getElementsByClassName(
+      `card-${this.props.menuId}`
+    )[0].clientHeight;
+
+    let cardsData = JSON.parse(localStorage.getItem("data"));
+    let index = _.findIndex(cardsData, { id: this.props.menuId });
+    console.log(this.props.menuId);
+    cardsData[index] = {
+      ...cardsData[index],
+      width: cardWidth,
+      height: cardHeight,
+    };
+    localStorage.setItem("data", JSON.stringify(cardsData))
   }
 
   /** ---- Resizing element END ---- **/
@@ -220,7 +190,6 @@ class CanvasItem extends Component {
         onResizeStop={this.handleResizeStop}
         enableResizing={this.resizeHandles}
       >
-        <div className="box"></div>
         {this.props.children}
       </Rnd>
     );
