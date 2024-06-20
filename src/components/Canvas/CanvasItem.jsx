@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import Rnd from "react-rnd";
-import IconButton from "../Icon/IconButton";
 import "./CanvasItem.css";
 
 const proptypes = {

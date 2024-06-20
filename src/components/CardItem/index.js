@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CardItem.css";
+import ImageUpload from "../Common/ImageUpload.jsx";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 export default function index({ cardData }) {
+  const [image, setImage] = useState();
+
   const splitStr = (str) => {
     let index = str.indexOf(" ");
 
@@ -14,8 +18,12 @@ export default function index({ cardData }) {
     }
   };
 
+  const handleDelete = () => {
+    console.log("menu delete");
+  };
+
   return (
-    <div className="container p-2">
+    <div className="container p-2 d-flex">
       <div className="d-flex flex-column">
         <div className="header-title d-flex justify-content-center">
           <span className="title1">
@@ -32,17 +40,38 @@ export default function index({ cardData }) {
             </div>
           ) : null}
         </div>
-        <div className="category-item-list d-flex justify-content-center">
+        <div className="category-item-list d-flex flex-column justify-content-center">
           {cardData && cardData.submenu
             ? cardData.submenu.map((item, index) => (
                 <div key={item.id} className="category-item">
-                  <p>{item.name}</p>
-                  <span>{`$${item.price1}`}</span>
-                  <span>{item.price2 ? `/$${item.price2}` : ""}</span>
+                  <div className="category-container">
+                    <p>{item.name}</p>
+                    <div>
+                      <span>{`$${item.price1}`}</span>
+                      <span>{item.price2 ? `/$${item.price2}` : ""}</span>
+                    </div>
+                  </div>
                 </div>
               ))
             : null}
         </div>
+        <div className="d-flex justify-content-end">
+          <ImageUpload id={cardData.id} setImage={setImage} />
+          <div>
+            <HighlightOffIcon onClick={handleDelete} />
+          </div>
+        </div>
+      </div>
+      <div>
+        {image && (
+          <div>
+            <img
+              src={image}
+              alt="Preview"
+              style={{ maxWidth: "100%", maxHeight: "300px", padding: "10px" }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
