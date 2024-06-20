@@ -1,11 +1,11 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import AriaLiveRegion from '../AriaLiveRegion/AriaLiveRegion';
-import FancyAriaLiveRegion from '../AriaLiveRegion/FancyAriaLiveRegion';
-import './Canvas.css';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import AriaLiveRegion from "../AriaLiveRegion/AriaLiveRegion";
+import FancyAriaLiveRegion from "../AriaLiveRegion/FancyAriaLiveRegion";
+import "./Canvas.css";
 
 const proptypes = {
   /** @type {number} width/height of each grid cell */
@@ -17,7 +17,7 @@ const proptypes = {
   /** @type {number} minimum width of resizable box */
   minWidth: PropTypes.number,
   /** @type {boolean} whether or not to show fancy live region*/
-  hideFancyLiveRegion: PropTypes.bool
+  hideFancyLiveRegion: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -25,13 +25,13 @@ const defaultProps = {
   gridSize: 10,
   minWidth: 1,
   minHeight: 1,
-  hideFancyLiveRegion: false
+  hideFancyLiveRegion: false,
 };
 
 class Canvas extends Component {
   constructor(props) {
     super(props);
-    this.state = { liveText: '' };
+    this.state = { liveText: "" };
     this.updateLiveText = this.updateLiveText.bind(this);
   }
 
@@ -47,8 +47,8 @@ class Canvas extends Component {
         updateLiveText: this.updateLiveText,
         gridInterval: this.props.gridInterval,
         canvasSize: canvasSize,
-        moveAriaDescribedby: 'dnd-canvas__operation--move',
-        resizeAriaDescribedby: 'dnd-canvas__operation--resize'
+        moveAriaDescribedby: "dnd-canvas__operation--move",
+        resizeAriaDescribedby: "dnd-canvas__operation--resize",
       });
     });
   }
@@ -75,12 +75,13 @@ class Canvas extends Component {
 
   render() {
     var size = this.props.gridInterval * this.props.gridSize;
-    var backgroundSize = this.props.gridInterval * 2 + 'px ' + this.props.gridInterval * 2 + 'px';
+    var backgroundSize =
+      this.props.gridInterval * 2 + "px " + this.props.gridInterval * 2 + "px";
     var style = {
       backgroundSize: backgroundSize,
-      backgroundPosition: '10px 10px', // TODO: remove hardcoding
-      width: '1000px',
-      height: '800px',
+      backgroundPosition: "10px 10px", // TODO: remove hardcoding
+      width: "1000px",
+      height: "800px",
     };
 
     return (
@@ -91,7 +92,7 @@ class Canvas extends Component {
       >
         {this.renderCanvasItems()}
       </div>
-    )
+    );
   }
 }
 

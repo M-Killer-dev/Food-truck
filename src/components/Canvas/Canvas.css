@@ -2,36 +2,36 @@
    Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
 
 .slds-card {
-    height: 150px;
-    width: 100%;
+  height: 150px;
+  width: 100%;
 }
 
 .dnd-canvas__container {
-    position: relative;
-    padding: 0 !important;
-    background-color: transparent;
+  position: relative;
+  padding: 0 !important;
+  background-color: transparent;
 }
 
 .dnd-canvas__object {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-color: transparent;
-    text-align: center;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-color: transparent;
+  text-align: center;
 }
 
 .dnd-canvas__object.ui-draggable-dragging,
-.dnd-canvas__object.dnd-canvas__keyboard-dragging { 
-    background-color: #ecebea;
-    border-color: #969492 !important;
-    border-style: dashed !important;
+.dnd-canvas__object.dnd-canvas__keyboard-dragging {
+  background-color: #ecebea;
+  border-color: #969492 !important;
+  border-style: dashed !important;
 }
 
-.dnd-canvas__object.dnd-canvas__keyboard-resizing { 
-    border-color: #1589ee;
-    box-shadow: 0 0 3px #0070D2;
+.dnd-canvas__object.dnd-canvas__keyboard-resizing {
+  border-color: #1589ee;
+  box-shadow: 0 0 3px #0070d2;
 }
 
 .slds-grid_vertical-align-end {
-    bottom: 0px;
+  bottom: 0px;
 }

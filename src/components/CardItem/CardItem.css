@@ -1,35 +1,35 @@
 .header-title .title1 {
-    color: #de6744;
-    padding-right: 10px;
-    font-weight: 700;
-    font-size: 32px;
+  color: #de6744;
+  padding-right: 10px;
+  font-weight: 700;
+  font-size: 32px;
 }
 
 .subtitle-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .subtitle {
-    font-weight: 500;
-    padding: 0 30px 0 30px;
+  font-weight: 500;
+  padding: 0 30px 0 30px;
 }
 
-
 .header-title .title2 {
-    color: black;
-    font-weight: 700;
-    font-size: 32px;
+  color: black;
+  font-weight: 700;
+  font-size: 32px;
 }
 
 .category-item {
-    display: flex;
-    justify-content: center;
-    font-weight: 700;
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
 }
 
 .category-item p {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 
-.category-item span {}
+.category-item span {
+}

@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import Rnd from 'react-rnd';
-import IconButton from '../Icon/IconButton';
-import './CanvasItem.css';
+import React, { Component } from "react";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import Rnd from "react-rnd";
+import IconButton from "../Icon/IconButton";
+import "./CanvasItem.css";
 
 const proptypes = {
   x: PropTypes.number,
@@ -18,7 +18,7 @@ const proptypes = {
   canvasSize: PropTypes.number,
   canvasHeight: PropTypes.number,
   moveAriaDescribedby: PropTypes.string,
-  resizeAriaDescribedby: PropTypes.string
+  resizeAriaDescribedby: PropTypes.string,
 };
 
 class CanvasItem extends Component {
@@ -30,14 +30,18 @@ class CanvasItem extends Component {
     this.handleResizeStop = this.handleResizeStop.bind(this);
 
     this.defaultPosition = {
-      x: (this.props.gridInterval * this.props.x),
-      y: (this.props.gridInterval * this.props.y),
+      x: this.props.gridInterval * this.props.x,
+      y: this.props.gridInterval * this.props.y,
       // width: (this.props.gridInterval * this.props.width),
       // height: (this.props.gridInterval * this.props.height),
-      width: this.props.width ? (this.props.gridInterval * this.props.width) : "fix-content",
-      height: this.props.height ? (this.props.gridInterval * this.props.height) : "fix-content",
-      minWidth: (this.props.gridInterval * this.props.minWidth),
-      minHeight: (this.props.gridInterval * this.props.minHeight)
+      width: this.props.width
+        ? this.props.gridInterval * this.props.width
+        : "fix-content",
+      height: this.props.height
+        ? this.props.gridInterval * this.props.height
+        : "fix-content",
+      minWidth: this.props.gridInterval * this.props.minWidth,
+      minHeight: this.props.gridInterval * this.props.minHeight,
     };
 
     this.state = {
@@ -47,8 +51,8 @@ class CanvasItem extends Component {
       x: this.defaultPosition.x,
       y: this.defaultPosition.y,
       width: this.defaultPosition.width,
-      height: this.defaultPosition.height
-    }
+      height: this.defaultPosition.height,
+    };
 
     // Only allow drag-resize from bottomRight
     this.resizeHandles = {
@@ -59,7 +63,7 @@ class CanvasItem extends Component {
       right: false,
       top: false,
       topLeft: false,
-      topRight: false
+      topRight: false,
     };
   }
 
@@ -74,8 +78,7 @@ class CanvasItem extends Component {
     this.setState({ x: x, y: y });
     if (isCancel) {
       this.props.updateLiveText(`Move cancelled.`);
-    }
-    else {
+    } else {
       this.props.updateLiveText(`
         Row: ${x / this.props.gridInterval + 1},
         Column: ${y / this.props.gridInterval + 1}.
@@ -87,7 +90,7 @@ class CanvasItem extends Component {
     if (this.state.x > 0) {
       this.updatePosition(this.state.x - this.props.gridInterval, this.state.y);
     } else {
-      this.props.updateLiveText('Reached left edge of canvas');
+      this.props.updateLiveText("Reached left edge of canvas");
     }
   }
 
@@ -95,7 +98,7 @@ class CanvasItem extends Component {
     if (this.state.x + this.state.width < this.props.canvasSize) {
       this.updatePosition(this.state.x + this.props.gridInterval, this.state.y);
     } else {
-      this.props.updateLiveText('Reached right edge of canvas');
+      this.props.updateLiveText("Reached right edge of canvas");
     }
   }
 
@@ -103,7 +106,7 @@ class CanvasItem extends Component {
     if (this.state.y > 0) {
       this.updatePosition(this.state.x, this.state.y - this.props.gridInterval);
     } else {
-      this.props.updateLiveText('Reached top edge of canvas');
+      this.props.updateLiveText("Reached top edge of canvas");
     }
   }
 
@@ -111,7 +114,7 @@ class CanvasItem extends Component {
     if (this.state.y + this.state.height < this.props.canvasSize) {
       this.updatePosition(this.state.x, this.state.y + this.props.gridInterval);
     } else {
-      this.props.updateLiveText('Reached bottom edge of canvas');
+      this.props.updateLiveText("Reached bottom edge of canvas");
     }
   }
 
@@ -119,7 +122,6 @@ class CanvasItem extends Component {
     this.updatePosition(this.state.prevX, this.state.prevY, true);
     this.setState({ isMoving: false });
   }
-
 
   /* Update state to reflect new position */
   handleDragStop(event, data) {
@@ -134,8 +136,7 @@ class CanvasItem extends Component {
     this.setState({ width: width, height: height });
     if (isCancel) {
       this.props.updateLiveText(`Resize cancelled.`);
-    }
-    else {
+    } else {
       this.props.updateLiveText(`
         Width: ${width / this.props.gridInterval},
         Height: ${height / this.props.gridInterval}.
@@ -145,27 +146,39 @@ class CanvasItem extends Component {
 
   makeShorter() {
     if (this.state.height > this.props.minHeight) {
-      this.updateSize(this.state.width, this.state.height - this.props.gridInterval);
+      this.updateSize(
+        this.state.width,
+        this.state.height - this.props.gridInterval
+      );
     }
   }
 
   makeTaller() {
     const newHeight = this.state.height + this.props.gridInterval;
     if (this.state.y + newHeight <= this.props.canvasSize) {
-      this.updateSize(this.state.width, this.state.height + this.props.gridInterval);
+      this.updateSize(
+        this.state.width,
+        this.state.height + this.props.gridInterval
+      );
     }
   }
 
   makeWider() {
     const newWidth = this.state.width + this.props.gridInterval;
     if (this.state.x + newWidth <= this.props.canvasSize) {
-      this.updateSize(this.state.width + this.props.gridInterval, this.state.height);
+      this.updateSize(
+        this.state.width + this.props.gridInterval,
+        this.state.height
+      );
     }
   }
 
   makeNarrower() {
     if (this.state.width > this.props.minWidth) {
-      this.updateSize(this.state.width - this.props.gridInterval, this.state.height);
+      this.updateSize(
+        this.state.width - this.props.gridInterval,
+        this.state.height
+      );
     }
   }
 
@@ -178,22 +191,23 @@ class CanvasItem extends Component {
   handleResizeStop(event, direction, refToElement, delta) {
     this.setState({
       width: this.state.width + delta.width,
-      height: this.state.height + delta.height
+      height: this.state.height + delta.height,
     });
   }
 
   /** ---- Resizing element END ---- **/
 
   render() {
-    const itemClasses = classNames(
-      'dnd-canvas__object', {
-      'dnd-canvas__object--moving': this.state.isMoving,
-      'dnd-canvas__object--resizing': this.state.isResizing
+    const itemClasses = classNames("dnd-canvas__object", {
+      "dnd-canvas__object--moving": this.state.isMoving,
+      "dnd-canvas__object--resizing": this.state.isResizing,
     });
 
     return (
       <Rnd
-        ref={c => { this.rnd = c; }}
+        ref={(c) => {
+          this.rnd = c;
+        }}
         className={itemClasses}
         default={this.defaultPosition}
         resizeGrid={[this.props.gridInterval, this.props.gridInterval]}
@@ -207,7 +221,7 @@ class CanvasItem extends Component {
         onResizeStop={this.handleResizeStop}
         enableResizing={this.resizeHandles}
       >
-        <div className='box'></div>
+        <div className="box"></div>
         {this.props.children}
       </Rnd>
     );
