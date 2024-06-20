@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AriaLiveRegion from '../AriaLiveRegion/AriaLiveRegion';
 import FancyAriaLiveRegion from '../AriaLiveRegion/FancyAriaLiveRegion';
@@ -31,12 +31,12 @@ const defaultProps = {
 class Canvas extends Component {
   constructor(props) {
     super(props);
-    this.state = {liveText: ''};
+    this.state = { liveText: '' };
     this.updateLiveText = this.updateLiveText.bind(this);
   }
 
   updateLiveText(text) {
-    this.setState({liveText: text});
+    this.setState({ liveText: text });
   }
 
   renderCanvasItems() {
@@ -75,33 +75,21 @@ class Canvas extends Component {
 
   render() {
     var size = this.props.gridInterval * this.props.gridSize;
-    var backgroundSize = this.props.gridInterval*2+ 'px ' + this.props.gridInterval*2 + 'px';
+    var backgroundSize = this.props.gridInterval * 2 + 'px ' + this.props.gridInterval * 2 + 'px';
     var style = {
       backgroundSize: backgroundSize,
       backgroundPosition: '10px 10px', // TODO: remove hardcoding
-      width: size + 'px',
-      height: size + 'px',
+      width: '1000px',
+      height: '800px',
     };
-    
+
     return (
-      <div>
-        {this.renderLiveRegion()}
-
-        <span id="dnd-canvas__operation--move" className="slds-assistive-text">
-          Press Spacebar to toggle grab
-        </span>
-
-        <span id="dnd-canvas__operation--resize" className="slds-assistive-text">
-          Press Spacebar to toggle resize
-        </span>
-
-        <div
-          className="slds-box dnd-canvas__container"
-          aria-label={`Canvas: ${this.props.gridSize} by ${this.props.gridSize}`}
-          style={style}
-        >
-          {this.renderCanvasItems()}
-        </div>
+      <div
+        className="slds-box dnd-canvas__container"
+        aria-label={`Canvas: ${this.props.gridSize} by ${this.props.gridSize}`}
+        style={style}
+      >
+        {this.renderCanvasItems()}
       </div>
     )
   }

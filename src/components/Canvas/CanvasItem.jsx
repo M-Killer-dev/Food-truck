@@ -37,8 +37,10 @@ class CanvasItem extends Component {
     this.defaultPosition = {
       x: (this.props.gridInterval * this.props.x),
       y: (this.props.gridInterval * this.props.y),
-      width: (this.props.gridInterval * this.props.width),
-      height: (this.props.gridInterval * this.props.height),
+      // width: (this.props.gridInterval * this.props.width),
+      // height: (this.props.gridInterval * this.props.height),
+      width: this.props.width ? (this.props.gridInterval * this.props.width) : "fix-content",
+      height: this.props.height ? (this.props.gridInterval * this.props.height) : "fix-content",
       minWidth: (this.props.gridInterval * this.props.minWidth),
       minHeight: (this.props.gridInterval * this.props.minHeight)
     };
@@ -317,30 +319,7 @@ class CanvasItem extends Component {
         enableResizing={this.resizeHandles}
       >
         <div>
-          <div className="slds-p-vertical_medium slds-text-heading_small">
-            {this.props.label}
-          </div>
-
-          <div className="dnd-canvas__object-buttons">
-            <IconButton
-              assistiveText={"Move " + this.props.label}
-              ariaDescribedby={this.props.moveAriaDescribedby}
-              className="dnd-canvas__object-button dnd-canvas__object-button--move"
-              sprite="utility"
-              symbol="move"
-              onClick={this.handleMoveClick}
-              onKeyDown={this.handleMoveKeyDown}/>
-
-            <IconButton
-              assistiveText={"Resize " + this.props.label}
-              ariaDescribedby={this.props.resizeAriaDescribedby}
-              className="dnd-canvas__object-button dnd-canvas__object-button--resize"
-              sprite="custom"
-              symbol="corner_drag"
-              onClick={this.handleResizeClick}
-              onKeyDown={this.handleResizeKeyDown} />
-          </div>
-
+          {this.props.children}
         </div>
       </Rnd>
     );
