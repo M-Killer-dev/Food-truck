@@ -1,5 +1,10 @@
-export const add_menu = (data) => ({
-  type: "ADD_MENU",
+export const add_menu_item = (data) => ({
+  type: "ADD_MENU_ITEM",
+  payload: data,
+});
+
+export const update_menu_item = (data) => ({
+  type: "UPDATE_MENU_ITEM",
   payload: data,
 });
 

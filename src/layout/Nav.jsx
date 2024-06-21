@@ -17,7 +17,12 @@ import {
 } from "reactstrap";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-import { add_menu, open_modal, close_modal } from "../redux/action/actions.js";
+import {
+  add_menu_item,
+  update_menu_item,
+  open_modal,
+  close_modal,
+} from "../redux/action/actions.js";
 
 const NavLayout = () => {
   const dispatch = useDispatch();
@@ -50,28 +55,28 @@ const NavLayout = () => {
     event.preventDefault();
     let cardsData = menu_data;
     if (!id) {
-      for (let i = 0; i < cardsData.length; i++) {
-        cardsData[i].id = _.uniqueId();
-      }
-      cardsData.push({
-        id: _.uniqueId(),
-        title: formData.title,
-        subtitle: formData.description,
-        submenu,
-        x: 500,
-        y: 500
-      });
+      dispatch(
+        add_menu_item({
+          id: Date(),
+          title: formData.title,
+          subtitle: formData.description,
+          submenu,
+          x: 500,
+          y: 500,
+        })
+      );
     } else {
       let index = _.findIndex(cardsData, { id: id });
-      cardsData[index] = {
-        id: cardsData[index].id,
-        title: formData.title,
-        subtitle: formData.description,
-        submenu,
-      };
+      dispatch(
+        update_menu_item({
+          id: cardsData[index].id,
+          title: formData.title,
+          subtitle: formData.description,
+          submenu,
+        })
+      );
     }
 
-    dispatch(add_menu(cardsData));
     dispatch(close_modal());
   };
 

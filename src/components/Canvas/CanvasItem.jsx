@@ -8,11 +8,7 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import Rnd from "react-rnd";
 import "./CanvasItem.css";
-import {
-  add_menu,
-  open_modal,
-  close_modal,
-} from "../../redux/action/actions.js";
+import { update_menu_item } from "../../redux/action/actions";
 
 const proptypes = {
   x: PropTypes.any,
@@ -131,14 +127,12 @@ class CanvasItem extends Component {
     this.setState({ x: data.x, y: data.y });
     let cardsData = this.props.menu_data;
     let index = _.findIndex(cardsData, { id: this.props.menuId });
-    if(!cardsData[index] || cardsData[index].x === data.x && cardsData[index].y === data.y)
-      return;
-    cardsData[index] = {
-      ...cardsData[index],
-      x: data.x,
-      y: data.y,
-    };
-    this.props.add_menu(cardsData);
+    if (this.props.openModal)
+      this.props.update_menu_item({
+        ...cardsData[index],
+        x: data.x,
+        y: data.y,
+      });
   }
 
   /** Update state to reflect new size */
@@ -157,12 +151,13 @@ class CanvasItem extends Component {
 
     let cardsData = this.props.menu_data;
     let index = _.findIndex(cardsData, { id: this.props.menuId });
-    cardsData[index] = {
-      ...cardsData[index],
-      width: cardWidth,
-      height: cardHeight,
-    };
-    this.props.add_menu(cardsData);
+
+    if (this.props.openModal)
+      this.props.update_menu_item({
+        ...cardsData[index],
+        width: cardWidth,
+        height: cardHeight,
+      });
   }
 
   /** ---- Resizing element END ---- **/
@@ -204,12 +199,13 @@ class CanvasItem extends Component {
 CanvasItem.propTypes = proptypes;
 
 const mapStateToProps = (state) => ({
-  menu_data: state.menu_data, // Assuming 'counter' is a key in your rootReducer
+  menu_data: state.menu_data,
+  openModal: state.openModal,
 });
 
 // Map dispatch actions to component props
 const mapDispatchToProps = {
-  add_menu,
+  update_menu_item,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasItem);

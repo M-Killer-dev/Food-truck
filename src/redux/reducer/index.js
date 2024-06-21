@@ -169,10 +169,17 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "ADD_MENU":
+    case "ADD_MENU_ITEM":
       return {
         ...state,
-        menu_data: [...action.payload],
+        menu_data: [...state.menu_data, action.payload],
+      };
+    case "UPDATE_MENU_ITEM":
+      let index = _.findIndex(state.menu_data, { id: action.payload.id });
+      state.menu_data[index] = action.payload;
+      return {
+        ...state,
+        menu_data: [...state.menu_data],
       };
     case "OPEN_MODAL":
       return { ...state, openModal: true, id: action.payload };
