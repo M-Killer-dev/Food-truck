@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalHeader,
@@ -17,13 +17,11 @@ import {
 } from "reactstrap";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-import { add_menu } from "../redux/action/actions.js";
+import { add_menu, open_modal, close_modal } from "../redux/action/actions.js";
 
 const NavLayout = () => {
   const dispatch = useDispatch();
-
-  const [open, setOpen] = useState(false);
-  const [submenuList, setSubmenuList] = useState([1]);
+  const { openModal, id, menu_data } = useSelector((state) => state);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -32,42 +30,53 @@ const NavLayout = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(event.target);
     setFormData({ ...formData, [name]: value });
   };
 
   const handleOpen = () => {
-    setOpen(!open);
+    dispatch(open_modal());
   };
 
   const toggle = () => {
-    setOpen(false);
+    dispatch(close_modal());
   };
 
   const handleAdd = () => {
-    submenuList.push(1);
-    setSubmenuList([...submenuList]);
+    submenu.push({});
+    setSubmenu([...submenu]);
   };
 
   const handleSave = (event) => {
     event.preventDefault();
-    let cardsData = JSON.parse(localStorage.getItem("data"));
-    for (let i = 0; i < cardsData.length; i++) {
-      cardsData[i].id = _.uniqueId();
+    let cardsData = menu_data;
+    if (!id) {
+      for (let i = 0; i < cardsData.length; i++) {
+        cardsData[i].id = _.uniqueId();
+      }
+      cardsData.push({
+        id: _.uniqueId(),
+        title: formData.title,
+        subtitle: formData.description,
+        submenu,
+        x: 500,
+        y: 500
+      });
+    } else {
+      let index = _.findIndex(cardsData, { id: id });
+      cardsData[index] = {
+        id: cardsData[index].id,
+        title: formData.title,
+        subtitle: formData.description,
+        submenu,
+      };
     }
-    cardsData.push({
-      id: _.uniqueId(),
-      title: formData.title,
-      subtitle: formData.description,
-      submenu,
-    });
-    localStorage.setItem("data", JSON.stringify(cardsData));
-    dispatch(add_menu());
-    setOpen(false);
+
+    dispatch(add_menu(cardsData));
+    dispatch(close_modal());
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    dispatch(close_modal());
   };
 
   const handleSubmenuChange = (e, index) => {
@@ -82,6 +91,20 @@ const NavLayout = () => {
     setSubmenu(tmp);
   };
 
+  useEffect(() => {
+    if (id) {
+      let index = _.findIndex(menu_data, { id: id });
+      setFormData({
+        title: menu_data[index].title,
+        description: menu_data[index].subtitle,
+      });
+      setSubmenu(menu_data[index].submenu);
+    } else {
+      setFormData({});
+      setSubmenu([]);
+    }
+  }, [id]);
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-sm bg-light">
@@ -92,7 +115,7 @@ const NavLayout = () => {
           <button className="btn btn-info">Save</button>
         </ul>
       </nav>
-      <Modal isOpen={open} toggle={toggle}>
+      <Modal isOpen={openModal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Add New Menu</ModalHeader>
         <ModalBody>
           <Form>
@@ -118,7 +141,7 @@ const NavLayout = () => {
                 onChange={handleInputChange}
               />
             </FormGroup>
-            {submenuList.map((item, index) => (
+            {submenu.map((item, index) => (
               <Row key={index}>
                 <Col md={6}>
                   <FormGroup>

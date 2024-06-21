@@ -16,7 +16,7 @@ const { store, persistor } = storage();
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate persistor={persistor}>
+    <PersistGate loading={null} persistor={persistor}>
       <Router>
         <Nav />
         <Route path="/" component={DragOnCanvasView}></Route>

@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
+import { useSelector, useDispatch } from "react-redux";
 import "./CardItem.css";
 import ImageUpload from "../Common/ImageUpload.jsx";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import EditIcon from "@material-ui/icons/Edit";
 import UnderStars from "./UnderStars.js";
+import {
+  open_modal,
+  delete_menu,
+} from "../../redux/action/actions.js";
 
 export default function index({ cardData }) {
+  const dispatch = useDispatch();
   const [image, setImage] = useState();
   const [inputVals, setInputVals] = useState([]);
 
@@ -26,12 +33,13 @@ export default function index({ cardData }) {
   //   setInputVals([...inputVals]);
   // };
 
-  const handleDelete = () => {
-    console.log("menu delete");
+  const handleDelete = (e, id) => {
+    e.stopPropagation();
+    dispatch(delete_menu(id));
   };
 
   const handleEdit = () => {
-    console.log("edit");
+    dispatch(open_modal(cardData.id));
   };
 
   useEffect(() => {
@@ -62,7 +70,7 @@ export default function index({ cardData }) {
         <div className="category-item-list d-flex flex-column justify-content-center">
           {cardData && cardData.submenu
             ? cardData.submenu.map((item, index) => (
-                <div key={item.id} className="category-item">
+                <div key={index} className="category-item">
                   <div className="text-with-dots">
                     {/* <input
                         type="text"
@@ -92,7 +100,7 @@ export default function index({ cardData }) {
             <EditIcon onClick={handleEdit} />
           </div>
           <div className="action-item">
-            <HighlightOffIcon onClick={handleDelete} />
+            <HighlightOffIcon onDrop={(e) => e.stopPropagation()} onDrag={(e) => e.stopPropagation()} onClick={(e) => handleDelete(e, cardData.id)} />
           </div>
         </div>
       </div>

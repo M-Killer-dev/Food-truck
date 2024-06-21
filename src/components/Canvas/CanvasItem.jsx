@@ -2,17 +2,23 @@
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import Rnd from "react-rnd";
 import "./CanvasItem.css";
+import {
+  add_menu,
+  open_modal,
+  close_modal,
+} from "../../redux/action/actions.js";
 
 const proptypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  x: PropTypes.any,
+  y: PropTypes.any,
+  width: PropTypes.any,
+  height: PropTypes.any,
   minWidth: PropTypes.number,
   minHeight: PropTypes.number,
   canvasSize: PropTypes.number,
@@ -35,12 +41,8 @@ class CanvasItem extends Component {
       y: this.props.y,
       // width: (this.props.gridInterval * this.props.width),
       // height: (this.props.gridInterval * this.props.height),
-      width: this.props.width
-        ? this.props.width
-        : "fix-content",
-      height: this.props.height
-        ? this.props.height
-        : "fix-content",
+      width: this.props.width ? this.props.width : "fix-content",
+      height: this.props.height ? this.props.height : "fix-content",
       minWidth: this.props.gridInterval * this.props.minWidth,
       minHeight: this.props.gridInterval * this.props.minHeight,
     };
@@ -85,8 +87,6 @@ class CanvasItem extends Component {
         Column: ${y / this.props.gridInterval + 1}.
       `);
     }
-
-    console.log(this.props.menuId, x, y);
   }
 
   moveLeft() {
@@ -129,14 +129,16 @@ class CanvasItem extends Component {
   /* Update state to reflect new position */
   handleDragStop(event, data) {
     this.setState({ x: data.x, y: data.y });
-    let cardsData = JSON.parse(localStorage.getItem("data"));
+    let cardsData = this.props.menu_data;
     let index = _.findIndex(cardsData, { id: this.props.menuId });
+    if(!cardsData[index] || cardsData[index].x === data.x && cardsData[index].y === data.y)
+      return;
     cardsData[index] = {
       ...cardsData[index],
       x: data.x,
       y: data.y,
     };
-    localStorage.setItem("data", JSON.stringify(cardsData))
+    this.props.add_menu(cardsData);
   }
 
   /** Update state to reflect new size */
@@ -153,24 +155,27 @@ class CanvasItem extends Component {
       `card-${this.props.menuId}`
     )[0].clientHeight;
 
-    let cardsData = JSON.parse(localStorage.getItem("data"));
+    let cardsData = this.props.menu_data;
     let index = _.findIndex(cardsData, { id: this.props.menuId });
-    console.log(this.props.menuId);
     cardsData[index] = {
       ...cardsData[index],
       width: cardWidth,
       height: cardHeight,
     };
-    localStorage.setItem("data", JSON.stringify(cardsData))
+    this.props.add_menu(cardsData);
   }
 
   /** ---- Resizing element END ---- **/
 
   render() {
-    const itemClasses = classNames("dnd-canvas__object", {
-      "dnd-canvas__object--moving": this.state.isMoving,
-      "dnd-canvas__object--resizing": this.state.isResizing,
-    }, "conic");
+    const itemClasses = classNames(
+      "dnd-canvas__object",
+      {
+        "dnd-canvas__object--moving": this.state.isMoving,
+        "dnd-canvas__object--resizing": this.state.isResizing,
+      },
+      "conic"
+    );
 
     return (
       <Rnd
@@ -198,4 +203,13 @@ class CanvasItem extends Component {
 
 CanvasItem.propTypes = proptypes;
 
-export default CanvasItem;
+const mapStateToProps = (state) => ({
+  menu_data: state.menu_data, // Assuming 'counter' is a key in your rootReducer
+});
+
+// Map dispatch actions to component props
+const mapDispatchToProps = {
+  add_menu,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CanvasItem);

@@ -5,7 +5,8 @@
   /* border-radius: 0.25rem;
   border: 1px solid #d8dde6; */
   /* overflow: hidden; */
-  border: 0px solid white;
+  border: 1px solid wheat;
+	border-radius: 10px;
   transition: border-width 0s, border-color 0.5s;
 }
 
