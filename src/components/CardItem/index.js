@@ -10,6 +10,8 @@ import { open_modal, delete_menu } from "../../redux/action/actions.js";
 
 export default function index({ cardData }) {
   const dispatch = useDispatch();
+  const { view_mode } = useSelector((state) => state);
+
   const [image, setImage] = useState();
 
   const splitStr = (str) => {
@@ -80,7 +82,11 @@ export default function index({ cardData }) {
               ))
             : null}
         </div>
-        <div className="action-group d-flex justify-content-center">
+        <div
+          className={`${
+            view_mode ? "hide-action-gruop" : ""
+          } action-group`}
+        >
           <div className="action-item">
             <ImageUpload id={cardData.id} setImage={setImage} />
           </div>

@@ -2,6 +2,7 @@
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Modal,
   ModalHeader,
@@ -22,11 +23,13 @@ import {
   update_menu_item,
   open_modal,
   close_modal,
+  set_menu_data,
+  set_view_mode,
 } from "../redux/action/actions.js";
 
 const NavLayout = () => {
   const dispatch = useDispatch();
-  const { openModal, id, menu_data } = useSelector((state) => state);
+  const { openModal, id, menu_data, view_mode } = useSelector((state) => state);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [submenu, setSubmenu] = useState([]);
@@ -98,9 +101,20 @@ const NavLayout = () => {
     setSubmenu(tmp);
   };
 
-  const handleSaveToFile = () => {
-    
-  }
+  const handleView = () => {
+    dispatch(set_view_mode());
+  };
+
+  const handleSaveToFile = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8000/api/v1/save`, {
+        menu: menu_data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -115,14 +129,38 @@ const NavLayout = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/v1/menu")
+      .then((response) => {
+        // Handle successful response
+
+        dispatch(set_menu_data(response.data));
+        console.log(response.data); // Log the response data
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-sm bg-light">
+      <nav
+        className={`${
+          view_mode ? "hide-nav" : ""
+        } navbar navbar-expand-sm bg-light`}
+      >
         <ul className="navbar-nav">
+          <button className="btn btn-success" onClick={handleView}>
+            View
+          </button>
           <button className="btn btn-success" onClick={handleOpen}>
             Add
           </button>
-          <button className="btn btn-info" onClick={handleSaveToFile}>Save</button>
+          <button className="btn btn-info" onClick={handleSaveToFile}>
+            Save
+          </button>
         </ul>
       </nav>
       <Modal isOpen={openModal} toggle={toggle}>

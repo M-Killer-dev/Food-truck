@@ -56,6 +56,16 @@
 .category-item span {
 }
 
+.action-group {
+  
+  display: flex;
+  justify-content: center;
+}
+
+.hide-action-gruop {
+  display: none !important;
+}
+
 .text-with-dots {
   width: 100%;
   padding-bottom: 5px;
@@ -70,10 +80,6 @@
   font-size: 0.5rem;
 }
 
-.action-group {
-
-}
-
 .action-group .action-item {
   padding: 5px 10px 5px 10px;
   font-size: 14px;
@@ -82,7 +88,6 @@
 .action-group .action-item:hover {
   cursor: pointer;
 }
-
 
 .card-img {
   width: 100%;
@@ -107,43 +112,47 @@
 }
 
 @keyframes rotate {
-	100% {
-		transform: rotate(1turn);
-	}
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 .conic:hover {
-	position: relative;
-	z-index: 0;
-	width: 400px;
-	height: 300px;
-	border-radius: 10px;
-	overflow: hidden;
-	
-	&::before {
-		content: '';
-		position: absolute;
-		z-index: -2;
-		left: -50%;
-		top: -50%;
-		width: 200%;
-		height: 200%;
-		background-color: #70a7d1;
-		background-repeat: no-repeat;
-		background-position: 0 0;
-		background-image: conic-gradient(transparent, rgba(168, 239, 255, 1), transparent 30%);
-		animation: rotate 4s linear infinite;
-	}
-	
-	&::after {
-		content: '';
-		position: absolute;
-		z-index: -1;
-		left: 6px;
-		top: 6px;
-		width: calc(100% - 12px);
-		height: calc(100% - 12px);
-		background: #fff;
-		border-radius: 5px;
-	}
+  position: relative;
+  z-index: 0;
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-color: #70a7d1;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(
+      transparent,
+      rgba(168, 239, 255, 1),
+      transparent 30%
+    );
+    animation: rotate 4s linear infinite;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 6px;
+    top: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    background: #fff;
+    border-radius: 5px;
+  }
 }

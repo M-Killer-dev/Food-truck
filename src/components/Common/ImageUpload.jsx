@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
 import ImageIcon from '@material-ui/icons/Image';
+// const fetch = require('node-fetch');
 
 const ImageUpload = (props) => {
 
   // Function to handle file selection
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
 
     // Check if file is selected
@@ -14,6 +14,20 @@ const ImageUpload = (props) => {
       reader.onload = (event) => {
         props.setImage(event.target.result); // Set the preview image
       };
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+
+      try {
+        const response = await fetch('http://localhost:8000/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        // props.setImage((data.filename).substring(8));
+        alert('Image uploaded successfully');
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
       reader.readAsDataURL(selectedFile);
     }
   };

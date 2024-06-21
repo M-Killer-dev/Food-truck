@@ -22,3 +22,11 @@ export const delete_menu = (delete_id) => ({
   payload: delete_id,
 });
 
+export const set_menu_data = (data) => ({
+  type: "SET_DATA",
+  payload: data,
+});
+
+export const set_view_mode = () => ({
+  type: "SET_VIEW_MODE",
+});
