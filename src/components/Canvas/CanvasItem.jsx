@@ -170,7 +170,7 @@ class CanvasItem extends Component {
     const itemClasses = classNames("dnd-canvas__object", {
       "dnd-canvas__object--moving": this.state.isMoving,
       "dnd-canvas__object--resizing": this.state.isResizing,
-    });
+    }, "conic");
 
     return (
       <Rnd

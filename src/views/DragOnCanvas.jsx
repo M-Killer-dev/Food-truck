@@ -23,7 +23,7 @@ export const DragOnCanvasExample = (props) => {
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("data"));
     if (data && data.length) setCardsData(data);
-    else setCardsData(menuData)
+    else setCardsData(menuData);
   }, []);
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export const DragOnCanvasExample = (props) => {
                 test={item.x}
                 x={item.x ? item.x : 10 * (index + 1)}
                 y={item.y ? item.y : 1 * (index + 1)}
-                width={item.width ? item.width : null }
-                height={item.height ? item.height : null }
+                width={item.width ? item.width : null}
+                height={item.height ? item.height : null}
                 minWidth={3}
                 minHeight={3}
                 menuId={item.id}

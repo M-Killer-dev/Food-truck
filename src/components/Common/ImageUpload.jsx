@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
+import ImageIcon from '@material-ui/icons/Image';
 
 const ImageUpload = (props) => {
 
@@ -27,7 +28,7 @@ const ImageUpload = (props) => {
         hidden
       />
       <label htmlFor={`file-upload-${props.id}`} className="custom-file-upload">
-        <AddIcon />
+        <ImageIcon />
       </label>
     </div>
   );

@@ -17,7 +17,8 @@
     "react-draggable": "^3.0.3",
     "react-rnd": "^5.1.0",
     "react-router-dom": "^5.1.0",
-    "react-scripts": "1.0.13"
+    "react-scripts": "1.0.13",
+    "reactstrap": "^9.2.2"
   },
   "devDependencies": {
     "mime": "1.4.1"

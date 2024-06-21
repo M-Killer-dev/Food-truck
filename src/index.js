@@ -7,9 +7,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { DragOnCanvasView } from "./views/DragOnCanvas";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import Nav from "./layout/Nav";
 
 ReactDOM.render(
   <Router>
+    <Nav />
     <Route path="/" component={DragOnCanvasView}></Route>
   </Router>,
   document.getElementById("root")

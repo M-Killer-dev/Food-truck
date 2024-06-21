@@ -3,6 +3,7 @@ export const menuData = [
     id: 1,
     title: "BBQ CHICKEN",
     subtitle: "Served as chicken only or dinner w/choice of 2 sides",
+    sold: true,
     submenu: [
       {
         id: 1,
@@ -92,27 +93,6 @@ export const menuData = [
   },
   {
     id: 5,
-    title: "OUR SPECIALS",
-    submenu: [
-      {
-        id: 1,
-        name: "PULLED PORK",
-        price1: 10,
-      },
-      {
-        id: 2,
-        name: "BEEF BRISKET SANDWICH",
-        price1: 12,
-      },
-      {
-        id: 3,
-        name: "RIB & CHICKEN COMBO",
-        price1: 25,
-      },
-    ],
-  },
-  {
-    id: 6,
     title: "OUR SPECIALS",
     submenu: [
       {
