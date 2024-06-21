@@ -127,7 +127,7 @@ class CanvasItem extends Component {
     this.setState({ x: data.x, y: data.y });
     let cardsData = this.props.menu_data;
     let index = _.findIndex(cardsData, { id: this.props.menuId });
-    if (this.props.openModal)
+    if (!this.props.openModal)
       this.props.update_menu_item({
         ...cardsData[index],
         x: data.x,
@@ -152,7 +152,7 @@ class CanvasItem extends Component {
     let cardsData = this.props.menu_data;
     let index = _.findIndex(cardsData, { id: this.props.menuId });
 
-    if (this.props.openModal)
+    if (!this.props.openModal && index >= 0)
       this.props.update_menu_item({
         ...cardsData[index],
         width: cardWidth,

@@ -23,8 +23,8 @@ export const DragOnCanvasExample = (props) => {
   return (
     <div>
       <Canvas hideFancyLiveRegion={props.hideFancyLiveRegion}>
-        <CanvasItem x={2} y={1} minWidth={3} minHeight={3}>
-          <div className="logo">
+        <CanvasItem menuId={"logo"} x={2} y={1} minWidth={3} minHeight={3}>
+          <div className="card-logo logo">
             <img src="logo.png" alt="logo"></img>
           </div>
         </CanvasItem>
