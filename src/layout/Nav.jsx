@@ -27,15 +27,16 @@ import {
 const NavLayout = () => {
   const dispatch = useDispatch();
   const { openModal, id, menu_data } = useSelector((state) => state);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-  });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [submenu, setSubmenu] = useState([]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
   };
 
   const handleOpen = () => {
@@ -47,7 +48,7 @@ const NavLayout = () => {
   };
 
   const handleAdd = () => {
-    submenu.push({});
+    submenu.push({ name: "", price1: "", price2: "" });
     setSubmenu([...submenu]);
   };
 
@@ -58,8 +59,8 @@ const NavLayout = () => {
       dispatch(
         add_menu_item({
           id: Date(),
-          title: formData.title,
-          subtitle: formData.description,
+          title: title,
+          subtitle: description,
           submenu,
           x: 500,
           y: 500,
@@ -70,13 +71,14 @@ const NavLayout = () => {
       dispatch(
         update_menu_item({
           id: cardsData[index].id,
-          title: formData.title,
-          subtitle: formData.description,
+          title: title,
+          subtitle: description,
           submenu,
         })
       );
     }
-
+    setTitle("");
+    setDescription("");
     dispatch(close_modal());
   };
 
@@ -99,13 +101,12 @@ const NavLayout = () => {
   useEffect(() => {
     if (id) {
       let index = _.findIndex(menu_data, { id: id });
-      setFormData({
-        title: menu_data[index].title,
-        description: menu_data[index].subtitle,
-      });
+      setTitle(menu_data[index].title ? menu_data[index].title : "");
+      setDescription(
+        menu_data[index].subtitle ? menu_data[index].subtitle : ""
+      );
       setSubmenu(menu_data[index].submenu);
     } else {
-      setFormData({});
       setSubmenu([]);
     }
   }, [id]);
@@ -131,8 +132,8 @@ const NavLayout = () => {
                 name="title"
                 placeholder="Title"
                 type="text"
-                value={formData.title}
-                onChange={handleInputChange}
+                value={title}
+                onChange={handleTitleChange}
               />
             </FormGroup>
             <FormGroup>
@@ -142,8 +143,8 @@ const NavLayout = () => {
                 name="description"
                 placeholder="Description"
                 type="text"
-                value={formData.description}
-                onChange={handleInputChange}
+                value={description}
+                onChange={handleDescriptionChange}
               />
             </FormGroup>
             {submenu.map((item, index) => (

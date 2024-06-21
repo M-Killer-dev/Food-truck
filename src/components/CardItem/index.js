@@ -6,17 +6,14 @@ import ImageUpload from "../Common/ImageUpload.jsx";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import EditIcon from "@material-ui/icons/Edit";
 import UnderStars from "./UnderStars.js";
-import {
-  open_modal,
-  delete_menu,
-} from "../../redux/action/actions.js";
+import { open_modal, delete_menu } from "../../redux/action/actions.js";
 
 export default function index({ cardData }) {
   const dispatch = useDispatch();
   const [image, setImage] = useState();
-  const [inputVals, setInputVals] = useState([]);
 
   const splitStr = (str) => {
+    if (str === undefined) return [""];
     let index = str.indexOf(" ");
 
     if (index !== -1) {
@@ -28,11 +25,6 @@ export default function index({ cardData }) {
     }
   };
 
-  // const handleChange = (e, index) => {
-  //   inputVals[index].name = e.target.value;
-  //   setInputVals([...inputVals]);
-  // };
-
   const handleDelete = (e, id) => {
     e.stopPropagation();
     dispatch(delete_menu(id));
@@ -41,10 +33,6 @@ export default function index({ cardData }) {
   const handleEdit = () => {
     dispatch(open_modal(cardData.id));
   };
-
-  useEffect(() => {
-    setInputVals(cardData.submenu);
-  }, []);
 
   return (
     <div
@@ -100,7 +88,11 @@ export default function index({ cardData }) {
             <EditIcon onClick={handleEdit} />
           </div>
           <div className="action-item">
-            <HighlightOffIcon onDrop={(e) => e.stopPropagation()} onDrag={(e) => e.stopPropagation()} onClick={(e) => handleDelete(e, cardData.id)} />
+            <HighlightOffIcon
+              onDrop={(e) => e.stopPropagation()}
+              onDrag={(e) => e.stopPropagation()}
+              onClick={(e) => handleDelete(e, cardData.id)}
+            />
           </div>
         </div>
       </div>
