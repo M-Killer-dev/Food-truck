@@ -1,9 +1,7 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
-import classNames from "classnames";
+import React, { useState } from "react";
 import {
   Modal,
   ModalHeader,
@@ -17,9 +15,13 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import _ from "lodash"
+import _ from "lodash";
+import { useSelector, useDispatch } from "react-redux";
+import { add_menu } from "../redux/action/actions.js";
 
 const NavLayout = () => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
   const [submenuList, setSubmenuList] = useState([1]);
   const [formData, setFormData] = useState({
@@ -50,8 +52,8 @@ const NavLayout = () => {
   const handleSave = (event) => {
     event.preventDefault();
     let cardsData = JSON.parse(localStorage.getItem("data"));
-    for(let i = 0; i < cardsData.length; i++) {
-        cardsData[i].id = _.uniqueId();
+    for (let i = 0; i < cardsData.length; i++) {
+      cardsData[i].id = _.uniqueId();
     }
     cardsData.push({
       id: _.uniqueId(),
@@ -60,7 +62,7 @@ const NavLayout = () => {
       submenu,
     });
     localStorage.setItem("data", JSON.stringify(cardsData));
-    // addMenu(formData, submenu)
+    dispatch(add_menu());
     setOpen(false);
   };
 
@@ -100,7 +102,7 @@ const NavLayout = () => {
                 id="title"
                 name="title"
                 placeholder="Title"
-                type="title"
+                type="text"
                 value={formData.title}
                 onChange={handleInputChange}
               />
@@ -111,7 +113,7 @@ const NavLayout = () => {
                 id="description"
                 name="description"
                 placeholder="Description"
-                type="Description"
+                type="text"
                 value={formData.description}
                 onChange={handleInputChange}
               />
@@ -120,13 +122,13 @@ const NavLayout = () => {
               <Row key={index}>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="name">name</Label>
+                    <Label for={`name-${index}`}>name</Label>
                     <Input
                       id={`name-${index}`}
                       name={`name-${index}`}
                       placeholder="name"
-                      type="name"
-                      value={submenu[index] && submenu[index].name}
+                      type="text"
+                      value={submenu[index] ? submenu[index].name : ""}
                       onChange={(e) => handleSubmenuChange(e, index)}
                     />
                   </FormGroup>
@@ -138,9 +140,9 @@ const NavLayout = () => {
                       id={`price1-${index}`}
                       name={`price1-${index}`}
                       placeholder="price1"
-                      value={submenu[index] && submenu[index].price1}
+                      value={submenu[index] ? submenu[index].price1 : ""}
                       onChange={(e) => handleSubmenuChange(e, index)}
-                      type="price1"
+                      type="text"
                     />
                   </FormGroup>
                 </Col>
@@ -151,8 +153,8 @@ const NavLayout = () => {
                       id={`price2-${index}`}
                       name={`price2-${index}`}
                       placeholder="price2"
-                      type="price2"
-                      value={submenu[index] && submenu[index].price2}
+                      type="text"
+                      value={submenu[index] ? submenu[index].price2 : ""}
                       onChange={(e) => handleSubmenuChange(e, index)}
                     />
                   </FormGroup>
@@ -165,7 +167,7 @@ const NavLayout = () => {
           <Button color="success" onClick={handleAdd}>
             Add Submenu
           </Button>{" "}
-          <Button color="success" type="submit" onClick={handleSave}>
+          <Button color="success" type="text" onClick={handleSave}>
             Save Menu
           </Button>{" "}
           <Button color="secondary" onClick={handleCancel}>

@@ -8,11 +8,20 @@ import { DragOnCanvasView } from "./views/DragOnCanvas";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import Nav from "./layout/Nav";
+import { Provider } from "react-redux";
+import storage from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+
+const { store, persistor } = storage();
 
 ReactDOM.render(
-  <Router>
-    <Nav />
-    <Route path="/" component={DragOnCanvasView}></Route>
-  </Router>,
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <Router>
+        <Nav />
+        <Route path="/" component={DragOnCanvasView}></Route>
+      </Router>
+    </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );

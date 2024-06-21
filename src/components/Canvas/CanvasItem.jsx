@@ -19,7 +19,7 @@ const proptypes = {
   canvasHeight: PropTypes.number,
   moveAriaDescribedby: PropTypes.string,
   resizeAriaDescribedby: PropTypes.string,
-  menuId: PropTypes.number,
+  menuId: PropTypes.any,
 };
 
 class CanvasItem extends Component {

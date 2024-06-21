@@ -2,6 +2,7 @@
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import Canvas from "../components/Canvas/Canvas";
 import CanvasItem from "../components/Canvas/CanvasItem";
@@ -18,13 +19,23 @@ const defaultProps = {
 };
 
 export const DragOnCanvasExample = (props) => {
+  const update_num  = useSelector((state) => state.update_num);
   const [cardsData, setCardsData] = useState([]);
+
+  console.log("here", update_num)
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("data"));
     if (data && data.length) setCardsData(data);
     else setCardsData(menuData);
   }, []);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("data"));
+    
+    console.log("Here", data);
+    if (data && data.length) setCardsData(data);
+  }, [update_num]);
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(cardsData));
