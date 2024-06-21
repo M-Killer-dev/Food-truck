@@ -98,6 +98,10 @@ const NavLayout = () => {
     setSubmenu(tmp);
   };
 
+  const handleSaveToFile = () => {
+    
+  }
+
   useEffect(() => {
     if (id) {
       let index = _.findIndex(menu_data, { id: id });
@@ -118,7 +122,7 @@ const NavLayout = () => {
           <button className="btn btn-success" onClick={handleOpen}>
             Add
           </button>
-          <button className="btn btn-info">Save</button>
+          <button className="btn btn-info" onClick={handleSaveToFile}>Save</button>
         </ul>
       </nav>
       <Modal isOpen={openModal} toggle={toggle}>

@@ -79,7 +79,7 @@ class Canvas extends Component {
       this.props.gridInterval * 2 + "px " + this.props.gridInterval * 2 + "px";
     var style = {
       backgroundSize: backgroundSize,
-      backgroundPosition: "10px 10px", // TODO: remove hardcoding
+      backgroundPosition: "5px 5px", // TODO: remove hardcoding
       height: "900px",
     };
 

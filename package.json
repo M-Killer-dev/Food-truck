@@ -10,6 +10,7 @@
     "classnames": "^2.2.5",
     "gh-pages": "^1.0.0",
     "lodash": "^4.17.21",
+    "multer": "^1.4.5-lts.1",
     "react": "^16.8.1",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",

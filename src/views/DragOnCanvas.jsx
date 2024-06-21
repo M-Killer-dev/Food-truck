@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present, salesforce.com, inc. All rights reserved
 // Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license
 
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import Canvas from "../components/Canvas/Canvas";
 import CanvasItem from "../components/Canvas/CanvasItem";
@@ -18,8 +18,7 @@ const defaultProps = {
 };
 
 export const DragOnCanvasExample = (props) => {
-  const dispatch = useDispatch();
-  const { update_num, openModal, menu_data } = useSelector((state) => state);
+  const { menu_data } = useSelector((state) => state);
 
   return (
     <div>
@@ -63,5 +62,3 @@ export const DragOnCanvasView = () => {
     </article>
   );
 };
-
-// module.exports = {DragOnCanvasExample, DragOnCanvasView}
