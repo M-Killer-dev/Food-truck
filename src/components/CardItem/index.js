@@ -12,9 +12,6 @@ export default function index({ cardData }) {
   const dispatch = useDispatch();
   const { view_mode } = useSelector((state) => state);
 
-  const [image, setImage] = useState();
-  const [fileName, setFileName] = useState("");
-
   const splitStr = (str) => {
     if (str === undefined) return [""];
     let index = str.indexOf(" ");
@@ -89,7 +86,7 @@ export default function index({ cardData }) {
           } action-group`}
         >
           <div className="action-item">
-            <ImageUpload id={cardData.id} setImage={setImage} setFileName={setFileName} />
+            <ImageUpload cardData={cardData} />
           </div>
           <div className="action-item">
             <EditIcon onClick={handleEdit} />
@@ -103,10 +100,10 @@ export default function index({ cardData }) {
           </div>
         </div>
       </div>
-      {image && (
+      {cardData.image && (
         <div className="card-img">
           <img
-            src={fileName ? fileName : image}
+            src={cardData.image}
             alt="Preview"
             style={{ maxWidth: "100%", maxHeight: "300px", padding: "10px" }}
           />

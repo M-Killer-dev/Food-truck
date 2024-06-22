@@ -138,7 +138,6 @@ const NavLayout = () => {
         // Handle successful response
 
         dispatch(set_menu_data(response.data));
-        console.log(response.data); // Log the response data
       })
       .catch((error) => {
         // Handle error

@@ -4,6 +4,7 @@ const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
 const multer = require("multer");
+const _ = require("lodash");
 
 const app = express();
 
@@ -28,8 +29,20 @@ const storage = multer.diskStorage({
 // Initialize Multer with the storage configuration
 const upload = multer({ storage });
 
-app.post("/upload", upload.single("image"), (req, res) => {
-  res.json({ status: 200, filename: req.file.path });
+app.post("/upload/:id", upload.single("image"), (req, res) => {
+  const filePath = path.join("./data/menu");
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return res.status(500).send("Error reading file");
+    }
+
+    const jsonData = JSON.parse(data);
+    let index = _.findIndex(jsonData, {id: req.params.id * 1});
+    if(index >= 0)
+      jsonData[index].image = req.file.filename;
+  });
+  res.json({ status: 200, filename: req.file.filename });
 });
 
 // Endpoint to read data from JSON file
@@ -146,7 +159,7 @@ app.delete("/api/v1/menus/:id", (req, res) => {
 });
 
 app.post("/api/v1/save", (req, res) => {
-  const filePath = path.join("./data/", "menu");
+  const filePath = F;
   const newData = req.body.menu;
 
   fs.writeFile(filePath, JSON.stringify(newData, null, 2), "utf8", (err) => {
