@@ -25,6 +25,7 @@ import {
   close_modal,
   set_menu_data,
   set_view_mode,
+  show_header,
 } from "../redux/action/actions.js";
 
 const NavLayout = () => {
@@ -130,6 +131,7 @@ const NavLayout = () => {
   }, [id]);
 
   useEffect(() => {
+    dispatch(show_header());
     axios
       .get("http://localhost:8000/api/v1/menu")
       .then((response) => {

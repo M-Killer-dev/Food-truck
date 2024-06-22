@@ -30,9 +30,16 @@ function rootReducer(state = initialState, action) {
     case "SET_DATA":
       if (state.menu_data && state.menu_data.length)
         return { ...state, view_mode: false };
-      else return { ...state, menu_data: JSON.parse(action.payload) };
+      else
+        return {
+          ...state,
+          menu_data: JSON.parse(action.payload),
+          view_mode: false,
+        };
     case "SET_VIEW_MODE":
       return { ...state, view_mode: true };
+    case "SHOW_HEADER":
+      return { ...state, view_mode: false };
     default:
       return state;
   }

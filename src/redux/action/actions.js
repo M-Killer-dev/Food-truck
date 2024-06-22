@@ -30,3 +30,7 @@ export const set_menu_data = (data) => ({
 export const set_view_mode = () => ({
   type: "SET_VIEW_MODE",
 });
+
+export const show_header = () => ({
+  type: "SHOW_HEADER",
+});
